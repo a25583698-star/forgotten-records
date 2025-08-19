@@ -1,0 +1,7 @@
+project_id = "kbqwpddzpjuwksfvyxsh"
+
+[functions.auth]
+verify_jwt = false
+
+[functions.records]
+verify_jwt = false

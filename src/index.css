@@ -1,0 +1,354 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite:wght@400&family=Creepster:wght@400&family=Nosifer:wght@400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Horror CTF Design System - The Forgotten Hospital Records */
+
+@layer base {
+  :root {
+    /* Horror color palette - Dark asylum theme */
+    --background: 0 0% 3%;
+    --foreground: 0 0% 85%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 90%;
+
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 90%;
+
+    /* Blood red primary theme */
+    --primary: 0 85% 25%;
+    --primary-foreground: 0 0% 98%;
+    --primary-glow: 0 100% 45%;
+
+    /* Dark grays for secondary */
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 80%;
+
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 50%;
+
+    --accent: 0 85% 15%;
+    --accent-foreground: 0 0% 95%;
+
+    /* Horror destructive - deeper blood */
+    --destructive: 0 90% 35%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 15%;
+    --input: 0 0% 8%;
+    --ring: 0 85% 25%;
+
+    --radius: 0.5rem;
+
+    /* Horror gradients */
+    --gradient-blood: linear-gradient(135deg, hsl(0 85% 25%), hsl(0 90% 35%));
+    --gradient-shadow: linear-gradient(180deg, hsl(0 0% 3%), hsl(0 0% 8%));
+    --gradient-fog: linear-gradient(45deg, hsl(0 0% 3% / 0.9), hsl(0 0% 12% / 0.7));
+
+    /* Horror shadows */
+    --shadow-blood: 0 10px 30px hsl(0 85% 25% / 0.3);
+    --shadow-glow: 0 0 40px hsl(0 100% 45% / 0.4);
+    --shadow-dark: 0 20px 50px hsl(0 0% 0% / 0.8);
+
+    /* Animations */
+    --transition-horror: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-flicker: opacity 0.1s ease-in-out;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-special;
+    overflow-x: hidden;
+  }
+
+  /* Horror scroll styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary-glow));
+  }
+}
+
+@layer components {
+  /* Horror animations and effects */
+  .flicker {
+    animation: flicker 0.1s infinite alternate;
+  }
+
+  @keyframes flicker {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.8; }
+  }
+
+  .screen-shake {
+    animation: shake 0.5s ease-in-out;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+  }
+
+  .glitch-hover {
+    position: relative;
+    transition: var(--transition-horror);
+  }
+
+  .glitch-hover:hover {
+    text-shadow: 2px 0 hsl(var(--primary)), -2px 0 hsl(var(--primary-glow));
+  }
+
+  .blood-drip {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blood-drip::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(180deg, transparent 0%, hsl(var(--primary) / 0.1) 100%);
+    pointer-events: none;
+  }
+
+  .fog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-fog);
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 1;
+    animation: fog-drift 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes fog-drift {
+    0% { transform: translateX(-10px) translateY(-5px); }
+    100% { transform: translateX(10px) translateY(5px); }
+  }
+
+  .ghostly-hand {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, hsl(var(--foreground) / 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+    animation: ghost-appear 15s ease-in-out infinite;
+  }
+
+  @keyframes ghost-appear {
+    0%, 90%, 100% { opacity: 0; transform: translateY(20px); }
+    5%, 85% { opacity: 0.3; transform: translateY(0); }
+  }
+
+  /* Paper texture effect for records */
+  .paper-texture {
+    background: 
+      linear-gradient(90deg, transparent 79px, hsl(var(--primary) / 0.1) 81px, hsl(var(--primary) / 0.1) 82px, transparent 84px),
+      linear-gradient(hsl(var(--card)), hsl(var(--card)));
+    background-size: 100% 1.2em;
+    position: relative;
+  }
+
+  .paper-texture::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 30%, hsl(var(--primary) / 0.05) 1px, transparent 1px),
+      radial-gradient(circle at 70% 80%, hsl(var(--primary) / 0.05) 1px, transparent 1px),
+      radial-gradient(circle at 40% 60%, hsl(var(--primary) / 0.03) 2px, transparent 2px);
+    background-size: 50px 50px, 80px 80px, 30px 30px;
+  }
+
+  /* Typewriter effect */
+  .typewriter {
+    overflow: hidden;
+    border-right: 2px solid hsl(var(--primary));
+    white-space: nowrap;
+    animation: typewriter 3s steps(40, end), blink-cursor 0.75s step-end infinite;
+  }
+
+  @keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  @keyframes blink-cursor {
+    from, to { border-color: transparent; }
+    50% { border-color: hsl(var(--primary)); }
+  }
+
+  /* Additional Horror Effects */
+  .glitch-text {
+    position: relative;
+    animation: glitch-animation 2s infinite;
+  }
+
+  @keyframes glitch-animation {
+    0%, 84%, 88%, 90%, 94%, 100% {
+      transform: skewX(0deg);
+    }
+    85% {
+      transform: skewX(2deg);
+    }
+    86% {
+      transform: skewX(-2deg);
+    }
+    87% {
+      transform: skewX(1deg);
+    }
+    89% {
+      transform: skewX(-1deg);
+    }
+    91% {
+      transform: skewX(2deg);
+    }
+    93% {
+      transform: skewX(-1deg);
+    }
+  }
+
+  .pulse-red {
+    animation: pulse-red-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-red-glow {
+    0%, 100% {
+      box-shadow: 0 0 5px hsl(var(--destructive) / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 20px hsl(var(--destructive) / 0.6), 0 0 35px hsl(var(--destructive) / 0.4);
+    }
+  }
+
+  .shadow-creep {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .shadow-creep::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.1), transparent);
+    animation: shadow-sweep 3s ease-in-out infinite;
+  }
+
+  @keyframes shadow-sweep {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: 100%; }
+  }
+
+  .breathing-shadow {
+    animation: breathing-effect 4s ease-in-out infinite;
+  }
+
+  @keyframes breathing-effect {
+    0%, 100% {
+      box-shadow: 0 0 10px hsl(var(--primary) / 0.2);
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 30px hsl(var(--primary) / 0.4), 0 0 50px hsl(var(--primary) / 0.2);
+      transform: scale(1.02);
+    }
+  }
+
+  .evil-flicker {
+    animation: evil-flicker-effect 5s ease-in-out infinite;
+  }
+
+  @keyframes evil-flicker-effect {
+    0%, 20%, 24%, 55%, 100% {
+      text-shadow: 0 0 5px hsl(var(--destructive) / 0.5);
+    }
+    22%, 23%, 56% {
+      text-shadow: 0 0 15px hsl(var(--destructive)), 0 0 25px hsl(var(--destructive) / 0.8);
+    }
+  }
+
+  .blood-stain {
+    position: relative;
+  }
+
+  .blood-stain::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    right: 15%;
+    width: 20px;
+    height: 30px;
+    background: radial-gradient(ellipse, hsl(var(--destructive) / 0.6) 0%, hsl(var(--destructive) / 0.3) 50%, transparent 70%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: blood-drop 6s ease-in-out infinite;
+  }
+
+  @keyframes blood-drop {
+    0%, 80%, 100% { opacity: 0; }
+    10%, 70% { opacity: 0.7; }
+    40% { opacity: 1; }
+  }
+
+  .haunted-hover:hover {
+    animation: haunted-shake 0.5s ease-in-out;
+    cursor: crosshair;
+  }
+
+  @keyframes haunted-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px) rotate(0.5deg); }
+    75% { transform: translateX(2px) rotate(-0.5deg); }
+  }
+
+  .fade-in-horror {
+    animation: fade-in-horror-effect 1.5s ease-out;
+  }
+
+  @keyframes fade-in-horror-effect {
+    0% {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      filter: blur(3px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+}
